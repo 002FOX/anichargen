@@ -14,9 +14,9 @@ function App() {
     console.log(id);
     const character = await axios.get(url);
   
-      console.log(character.data);
-      setcharacter(character.data);
-      setactive(true);
+    console.log(character.data);
+    setcharacter(character.data);
+    setactive(true);
   }
 
   const onClickHandler= (e) => {
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div className="App">
-      <Button isActive={active} clicked={onClickHandler}/>
+      <Button isActive= {active} clicked={onClickHandler}/>
       {active ? <CharacterCard chardata={chardata}/> : <h1></h1>}   
     </div>
   );
