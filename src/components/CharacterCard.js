@@ -3,8 +3,12 @@ import React from 'react'
 function CharacterCard(props) {
   return (
     <div>
-        {// props.chardata.data.images.jpg.image_url, props.chardata.data.name}
-         
+    <div style={{display: 'flex',  justifyContent:'center'}}>
+      {props.chardata.data.name}       
+    </div>
+    <div style={{display: 'flex',  justifyContent:'center'}}>
+    <img src= {props.chardata.data.images.jpg.image_url} alt="owo" />
+    </div>
     </div>
   )
 }

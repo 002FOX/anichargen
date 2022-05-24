@@ -1,6 +1,8 @@
 import { useState } from "react";
 import CharacterCard from "./components/CharacterCard";
-import Button from "./components/Button";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 function App() {
@@ -25,9 +27,18 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Button isActive= {active} clicked={onClickHandler}/>
-      {active ? <CharacterCard chardata={chardata}/> : <h1></h1>}   
+    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}} className= "App">
+      <Card style={{ width: '18rem' }}>
+        <Card.Body>
+          <Card.Title>Result:</Card.Title>
+          <Card.Text>
+          {active ? <CharacterCard chardata= {chardata}/> : <h1></h1>}
+          </Card.Text>
+          <div style={{display: 'flex',  justifyContent:'center'}}>
+          <Button variant="primary" isActive= {active} onClick= {onClickHandler}>Generate</Button> 
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 }
