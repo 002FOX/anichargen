@@ -4,26 +4,30 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import { fireEvent } from "@testing-library/react";
 
 function App() {
 
-  const [chardata, setcharacter] = useState(null);
+  const [chardata, setcharacter] = useState([]);
   const [active, setactive] = useState(false);
 
   const generate = async() => {
+    
     const id = Math.floor(Math.random() * 99999)
+    console.log(id)
     const url = `https://api.jikan.moe/v4/characters/${id}`
-    console.log(id);
     const character = await axios.get(url);
   
     console.log(character.data);
-    setcharacter(character.data);
+    setcharacter(chardata => [...chardata, character.data]);
     setactive(true);
   }
 
   const onClickHandler= (e) => {
     e.preventDefault();
-    generate();
+    for(let i = 0; i < 5; i++)
+      generate();
+    setcharacter([])
   }
 
   return (
@@ -32,10 +36,10 @@ function App() {
         <Card.Body>
           <Card.Title>Result:</Card.Title>
           <Card.Text>
-          {active ? <CharacterCard chardata= {chardata}/> : <h1></h1>}
+          { active ? chardata.map(char => (<CharacterCard chrname={char.data.name} chrimg={char.data.images.jpg.image_url} />)) : ""}
           </Card.Text>
           <div style={{display: 'flex',  justifyContent:'center'}}>
-          <Button variant="primary" isActive= {active} onClick= {onClickHandler}>Generate</Button> 
+          <Button variant="primary" onClick= {onClickHandler}>Generate</Button> 
           </div>
         </Card.Body>
       </Card>
