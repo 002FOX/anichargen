@@ -14,11 +14,11 @@ function App() {
     
     const id = Math.floor(Math.random() * 99999)
     console.log(id)
-    const url = `https://api.jikan.moe/v4/characters/${id}`
+    const url = `https://kitsu.io/api/edge/characters/${id}`
     const character = await axios.get(url);
   
-    console.log(character.data);
-    setcharacter(chardata => [...chardata, character.data]);
+    console.log(character.data.data);
+    setcharacter(chardata => [...chardata, character.data.data]);
     setactive(true);
   }
 
@@ -31,11 +31,11 @@ function App() {
 
   return (
     <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}} className= "App">
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: '70rem' }}>
         <Card.Body>
           <Card.Title>Result:</Card.Title>
-          <div>
-          { active ? chardata.map(char => (<CharacterCard key={char.data.name} chrname={char.data.name} chrimg={char.data.images.jpg.image_url} />)) : ""}
+          <div style={{display: 'flex',  justifyContent:'center', flexDirection: 'row', alignItems: 'center'}}>
+          { active ? chardata.map(char => (<CharacterCard key={char.attributes.name} chrname={char.attributes.name} chrimg={char.attributes.image.original} />)) : ""}
           </div>
           <section style={{display: 'flex',  justifyContent:'center'}}>
           <Button variant="primary" onClick= {onClickHandler}>Generate</Button>
