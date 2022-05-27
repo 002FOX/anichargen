@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import { fireEvent } from "@testing-library/react";
 
 function App() {
 
@@ -35,12 +34,12 @@ function App() {
       <Card style={{ width: '18rem' }}>
         <Card.Body>
           <Card.Title>Result:</Card.Title>
-          <Card.Text>
-          { active ? chardata.map(char => (<CharacterCard chrname={char.data.name} chrimg={char.data.images.jpg.image_url} />)) : ""}
-          </Card.Text>
-          <div style={{display: 'flex',  justifyContent:'center'}}>
-          <Button variant="primary" onClick= {onClickHandler}>Generate</Button> 
+          <div>
+          { active ? chardata.map(char => (<CharacterCard key={char.data.name} chrname={char.data.name} chrimg={char.data.images.jpg.image_url} />)) : ""}
           </div>
+          <section style={{display: 'flex',  justifyContent:'center'}}>
+          <Button variant="primary" onClick= {onClickHandler}>Generate</Button>
+          </section>
         </Card.Body>
       </Card>
     </div>
