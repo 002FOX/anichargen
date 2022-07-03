@@ -30,8 +30,19 @@ function App() {
   }
 
   return (
-    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}} className= "App">
+    <div>
+      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '30vh'}} className= "App">
       <Card style={{ width: '75rem' }}>
+        <Card.Body>
+          <Card.Title>Generate:</Card.Title>
+          <section style={{display: 'flex',  justifyContent:'center'}}>
+          <Button variant="primary" onClick= {onClickHandler}>GO</Button>
+          </section>
+        </Card.Body>
+      </Card>
+      </div>
+    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '50vh'}} className= "App">
+      <Card style={{ width: '100rem' }}>
         <Card.Body>
           <Card.Title>Result:</Card.Title>
           <div style={{display: 'flex',  justifyContent:'center', flexDirection: 'row', alignItems: 'center'}}>
@@ -39,11 +50,9 @@ function App() {
           chardata.map(char => (<CharacterCard  key={char.attributes.name} chrname={char.attributes.name} chrimg={char.attributes.image} />)) 
           : ""}
           </div>
-          <section style={{display: 'flex',  justifyContent:'center'}}>
-          <Button variant="primary" onClick= {onClickHandler}>Generate</Button>
-          </section>
         </Card.Body>
       </Card>
+    </div>
     </div>
   );
 }
