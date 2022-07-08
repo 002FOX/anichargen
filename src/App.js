@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CharacterCard from "./components/CharacterCard";
 import Filters from "./components/Filters";
 import Button from 'react-bootstrap/Button';
@@ -10,6 +10,21 @@ function App() {
 
   const [chardata, setcharacter] = useState([]);
   const [active, setactive] = useState(false);
+  const [loading, setloading] = useState(false);
+
+  function simulateNetworkRequest() {
+    return new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+
+  
+    useEffect(() => {
+      if (loading) {
+        simulateNetworkRequest().then(() => {
+          setloading(false);
+        });
+      }
+    }, [loading]);
+
 
   const generate = async() => {
 
@@ -20,13 +35,15 @@ function App() {
     console.log(character.data.data)
 
     setcharacter(chardata => [...chardata, character.data.data]);
-    setactive(true);
   }
 
   const onClickHandler= (e) => {
+    setloading(true);
     e.preventDefault();
     for(let i = 0; i < 5; i++)
       generate();
+    
+    setactive(true);
     setcharacter([])
   }
 
@@ -38,7 +55,7 @@ function App() {
             <Card.Title>Filters:</Card.Title>
               <div style={{display: 'flex', justifyContent:'center', flexDirection: 'column', alignItems: 'center' }}>
                 <Filters />
-                <Button style={{marginTop: '1em'}} variant="primary" onClick= {onClickHandler}>GO</Button>
+                <Button disabled={loading} style={{marginTop: '1em'}} variant="primary" onClick= {loading? null : onClickHandler}>{loading? "Loading..." : "Generate"}</Button>
               </div>
           </Card.Body>
         </Card>
@@ -47,11 +64,11 @@ function App() {
         <Card style={{ width: '100rem' }}>
           <Card.Body>
             <Card.Title>Result:</Card.Title>
-            <div style={{display: 'flex',  justifyContent:'center', flexDirection: 'row', alignItems: 'center'}}>
-              { active ? 
-              chardata.map(char => (<CharacterCard  key={char.attributes.name} chrname={char.attributes.name} chrimg={char.attributes.image} />)) 
+              <div style={{display: 'flex',  justifyContent:'center', flexDirection: 'row', alignItems: 'center'}}>
+              {active ? chardata.map(char => (<CharacterCard  key={char.attributes.name} chrname={char.attributes.name} chrimg={char.attributes.image} />)) 
               : ""}
-            </div>
+              </div>
+            
           </Card.Body>
         </Card>
       </>
